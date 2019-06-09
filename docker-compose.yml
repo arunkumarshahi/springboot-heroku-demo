@@ -1,0 +1,16 @@
+demo-postgres:
+  image: postgres:latest
+  ports:
+    - 5432:5432
+  environment:
+    - POSTGRES_DB=demodb
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=secret123
+    
+    
+springboot-heroku-demo:
+  image: arunk/springboot-heroku-demo
+  links:
+    - demo-postgres:postgres
+  ports:
+    - 80:8080
