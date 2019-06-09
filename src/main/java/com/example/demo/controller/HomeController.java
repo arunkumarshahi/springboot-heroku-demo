@@ -17,7 +17,7 @@ public class HomeController {
     public HomeController(UserRepository repository) {
         this.repository = repository;
     }
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(Model model) {
         List<User> users = repository.findAll();
         model.addAttribute("users", users);
