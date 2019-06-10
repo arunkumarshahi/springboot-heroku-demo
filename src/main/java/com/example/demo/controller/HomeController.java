@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.actuator.metrics.LoginService;
 import com.example.demo.dao.User;
 import com.example.demo.repo.UserRepository;
 
@@ -25,6 +26,8 @@ public class HomeController {
 	@GetMapping("/home")
 	public String home(Model model) {
 		givenGlobalRegistry_whenIncrementAnywhere_thenCounted();
+		(new LoginService()).login("admin@gmail.com","admin");
+		(new LoginService()).login("admin@gmail.com","adminxxx");
 		List<User> users = repository.findAll();
 		model.addAttribute("users", users);
 		return "home";
