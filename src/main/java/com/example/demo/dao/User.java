@@ -1,11 +1,14 @@
 package com.example.demo.dao;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.example.demo.actuator.metrics.GitHubService;
+@EntityListeners(GitHubService.class)
 @Entity
 @Table(name = "USERS")
 public class User {
