@@ -10,17 +10,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.dao.User;
 import com.example.demo.repo.UserRepository;
 
+import io.micrometer.core.instrument.Metrics;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
+
 @Controller
 public class HomeController {
 	private UserRepository repository;
-    @Autowired
-    public HomeController(UserRepository repository) {
-        this.repository = repository;
+
+	@Autowired
+	public HomeController(UserRepository repository) {
+		this.repository = repository;
+	}
+
+	@GetMapping("/home")
+	public String home(Model model) {
+		givenGlobalRegistry_whenIncrementAnywhere_thenCounted();
+		List<User> users = repository.findAll();
+		model.addAttribute("users", users);
+		return "home";
+	}
+
+	public void givenGlobalRegistry_whenIncrementAnywhere_thenCounted() {
+    class CountedObject {
+    private CountedObject() {
+    Metrics.counter("objects.instance").increment(1.0);
     }
-    @GetMapping("/home")
-    public String home(Model model) {
-        List<User> users = repository.findAll();
-        model.addAttribute("users", users);
-        return "home";
+    }
+    Metrics.addRegistry(new SimpleMeterRegistry());
+    
+Metrics.counter("objects.instance").increment();
+   new CountedObject();
+
     }
 }
