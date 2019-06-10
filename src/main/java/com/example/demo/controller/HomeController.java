@@ -23,24 +23,27 @@ public class HomeController {
 		this.repository = repository;
 	}
 
+	@Autowired
+	LoginService loginService;
+
 	@GetMapping("/home")
 	public String home(Model model) {
 		givenGlobalRegistry_whenIncrementAnywhere_thenCounted();
-		(new LoginService()).login("admin@gmail.com","admin");
-		(new LoginService()).login("admin@gmail.com","adminxxx");
+		loginService.login("admin@gmail.com", "admin");
+		loginService.login("admin@gmail.com", "adminxxx");
 		List<User> users = repository.findAll();
 		model.addAttribute("users", users);
 		return "home";
 	}
 
 	public void givenGlobalRegistry_whenIncrementAnywhere_thenCounted() {
-    class CountedObject {
-    private CountedObject() {
-    Metrics.counter("objects.instance-x-x").increment(1.0);
-    }
-    }
-   // Metrics.addRegistry(new SimpleMeterRegistry());
-   new CountedObject();
+		class CountedObject {
+			private CountedObject() {
+				Metrics.counter("objects.instance-x-x").increment(1.0);
+			}
+		}
+		// Metrics.addRegistry(new SimpleMeterRegistry());
+		new CountedObject();
 
-    }
+	}
 }
