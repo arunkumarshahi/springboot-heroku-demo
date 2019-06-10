@@ -33,10 +33,10 @@ public class HomeController {
 	public void givenGlobalRegistry_whenIncrementAnywhere_thenCounted() {
     class CountedObject {
     private CountedObject() {
-    Metrics.counter("objects.instance-x").increment(1.0);
+    Metrics.counter("objects.instance-x-x").increment(1.0);
     }
     }
-    Metrics.addRegistry(new SimpleMeterRegistry());
+   // Metrics.addRegistry(new SimpleMeterRegistry());
    new CountedObject();
 
     }
