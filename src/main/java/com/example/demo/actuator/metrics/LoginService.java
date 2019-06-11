@@ -15,7 +15,7 @@ MeterRegistry meterRegistry;
 	        if("admin@gmail.com".equalsIgnoreCase(email) && "admin".equals(password)){
 	            //counterService.increment("counter.login.success");
 	        	Metrics.counter("counter.login.success").increment(1.0);
-	        	meterRegistry.counter("login.access", "accessCounter").increment();
+	        	meterRegistry.counter("login.access", "accessCounter",email).increment();
 	            return true;
 	        } else {
 	        	Metrics.counter("counter.login.failure").increment(1.0);
