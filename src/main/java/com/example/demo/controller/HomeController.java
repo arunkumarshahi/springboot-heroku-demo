@@ -13,6 +13,7 @@ import com.example.demo.repo.UserRepository;
 
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
+import java.util.Random;
 
 @Controller
 public class HomeController {
@@ -28,12 +29,19 @@ public class HomeController {
 
 	@GetMapping("/home")
 	public String home(Model model) {
-		givenGlobalRegistry_whenIncrementAnywhere_thenCounted();
-		loginService.login("admin@gmail.com", "admin");
-		loginService.login("admin@gmail.com", "adminxxx");
+		collectMatrix();
 		List<User> users = repository.findAll();
 		model.addAttribute("users", users);
 		return "home";
+	}
+
+	public void collectMatrix() {
+		Random rand = new Random();
+		String emails[] = { "arun@gmail.com", "a.kr@gmail.com", "techarun@gmail.com" };
+		int rand_int1 = rand.nextInt(3);
+		givenGlobalRegistry_whenIncrementAnywhere_thenCounted();
+		loginService.login(emails[rand_int1], "admin");
+		loginService.login(emails[rand_int1], "adminxxx");
 	}
 
 	public void givenGlobalRegistry_whenIncrementAnywhere_thenCounted() {
