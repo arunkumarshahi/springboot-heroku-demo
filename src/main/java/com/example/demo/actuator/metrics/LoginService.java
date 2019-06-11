@@ -12,10 +12,11 @@ public class LoginService {
 MeterRegistry meterRegistry;
 	 public boolean login(String email, String password)
 	    {
-	        if("admin@gmail.com".equalsIgnoreCase(email) && "admin".equals(password)){
+		 meterRegistry.counter("login.access", "accessCounter",email).increment();
+	        if("arun@gmail.com".equalsIgnoreCase(email)){
 	            //counterService.increment("counter.login.success");
 	        	Metrics.counter("counter.login.success").increment(1.0);
-	        	meterRegistry.counter("login.access", "accessCounter",email).increment();
+	        	
 	            return true;
 	        } else {
 	        	Metrics.counter("counter.login.failure").increment(1.0);
